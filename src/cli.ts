@@ -55,6 +55,7 @@ export interface CLIOptions {
 
     noMaps: boolean;
     noEnums: boolean;
+    inferDates: boolean;
     alphabetizeProperties: boolean;
     allPropertiesOptional: boolean;
     noCombineClasses: boolean;
@@ -233,6 +234,7 @@ function inferOptions(opts: Partial<CLIOptions>): CLIOptions {
         topLevel: opts.topLevel || inferTopLevel(opts),
         noMaps: !!opts.noMaps,
         noEnums: !!opts.noEnums,
+        inferDates: opts.inferDates || false,
         noCombineClasses: !!opts.noCombineClasses,
         noRender: !!opts.noRender,
         alphabetizeProperties: !!opts.alphabetizeProperties,
@@ -334,6 +336,11 @@ const optionDefinitions: OptionDefinition[] = [
         name: "no-enums",
         type: Boolean,
         description: "Don't infer enums, always use strings."
+    },
+    {
+        name: "infer-dates",
+        type: Boolean,
+        description: "Infer dates and times."
     },
     {
         name: "no-render",
@@ -630,6 +637,7 @@ export async function main(args: string[] | Partial<CLIOptions>) {
             sources,
             inferMaps: !options.noMaps,
             inferEnums: !options.noEnums,
+            inferDates: options.inferDates,
             alphabetizeProperties: options.alphabetizeProperties,
             allPropertiesOptional: options.allPropertiesOptional,
             combineClasses: !options.noCombineClasses,
