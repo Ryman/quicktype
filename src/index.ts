@@ -97,7 +97,7 @@ const defaultOptions: Options = {
     findSimilarClassesSchema: undefined,
     inferMaps: true,
     inferEnums: true,
-    inferDates: false,
+    inferDates: true,
     alphabetizeProperties: false,
     allPropertiesOptional: false,
     combineClasses: true,
@@ -176,7 +176,11 @@ export class Run {
             Map(this._allInputs.samples).forEach((cjson, name) => {
                 typeBuilder.addTopLevel(
                     name,
-                    inference.inferType(this._compressedJSON as CompressedJSON, makeNamesTypeAttributes(name, false), cjson)
+                    inference.inferType(
+                        this._compressedJSON as CompressedJSON,
+                        makeNamesTypeAttributes(name, false),
+                        cjson
+                    )
                 );
             });
         }
