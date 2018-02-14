@@ -306,6 +306,10 @@ class CPlusPlusRenderer extends ConvenienceRenderer {
         return kind === "class";
     }
 
+    protected get commentLineStart(): string {
+        return "// ";
+    }
+
     private emitBlock = (line: Sourcelike, withSemicolon: boolean, f: () => void): void => {
         this.emitLine(line, " {");
         this.indent(f);
@@ -719,9 +723,9 @@ inline ${optionalType}<T> get_optional(const json &j, const char *property) {
 
     protected emitSourceStructure(): void {
         if (this.leadingComments !== undefined) {
-            this.emitCommentLines("// ", this.leadingComments);
+            this.emitCommentLines(this.leadingComments);
         } else if (!this._justTypes) {
-            this.emitCommentLines("// ", [
+            this.emitCommentLines([
                 " To parse this JSON data, first install",
                 "",
                 "     Boost     http://www.boost.org",

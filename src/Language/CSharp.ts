@@ -219,6 +219,10 @@ class CSharpRenderer extends ConvenienceRenderer {
         return [extensionsName];
     }
 
+    protected get commentLineStart(): string {
+        return "// ";
+    }
+
     emitBlock = (f: () => void, semicolon: boolean = false): void => {
         this.emitLine("{");
         this.indent(f);
@@ -635,7 +639,7 @@ class CSharpRenderer extends ConvenienceRenderer {
 
     protected emitSourceStructure(): void {
         if (this.leadingComments !== undefined) {
-            this.emitCommentLines("// ", this.leadingComments);
+            this.emitCommentLines(this.leadingComments);
         } else if (this._needHelpers) {
             this.emitLine(
                 "// To parse this JSON data, add NuGet 'Newtonsoft.Json' then do",

@@ -281,6 +281,10 @@ class SwiftRenderer extends ConvenienceRenderer {
         return kind === "array" || kind === "map";
     }
 
+    protected get commentLineStart(): string {
+        return "// ";
+    }
+
     private emitBlock = (line: Sourcelike, f: () => void): void => {
         this.emitLine(line, " {");
         this.indent(f);
@@ -340,7 +344,7 @@ class SwiftRenderer extends ConvenienceRenderer {
 
     private renderHeader = (): void => {
         if (this.leadingComments !== undefined) {
-            this.emitCommentLines("// ", this.leadingComments);
+            this.emitCommentLines(this.leadingComments);
         } else if (!this._justTypes) {
             this.emitLine("// To parse the JSON, add this file to your project and do:");
             this.emitLine("//");

@@ -24,7 +24,11 @@ import { Sourcelike, sourcelikeToSource, serializeRenderResult } from "./Source"
 import { trimEnd } from "lodash";
 import { declarationsForGraph, DeclarationIR, cycleBreakerTypesForGraph, Declaration } from "./DeclarationIR";
 import { TypeAttributeStoreView } from "./TypeGraph";
-import { TypeAttributeKind, descriptionTypeAttributeKind, propertyDescriptionsTypeAttributeKind } from "./TypeAttributes";
+import {
+    TypeAttributeKind,
+    descriptionTypeAttributeKind,
+    propertyDescriptionsTypeAttributeKind
+} from "./TypeAttributes";
 
 function splitDescription(description: string | undefined): string[] | undefined {
     if (description === undefined) return undefined;
@@ -651,11 +655,15 @@ export abstract class ConvenienceRenderer extends Renderer {
         return serializeRenderResult(sourcelikeToSource(src), this.names, "").lines.join("\n");
     };
 
-    protected emitCommentLines = (commentStart: string, lines: string[]): void => {
+    protected get commentLineStart(): string {
+        return panic("commentLineStart not implemented");
+    }
+
+    protected emitCommentLines(lines: string[]): void {
         for (const line of lines) {
-            this.emitLine(trimEnd(commentStart + line));
+            this.emitLine(trimEnd(this.commentLineStart + line));
         }
-    };
+    }
 
     private processGraph(): void {
         this._declarationIR = declarationsForGraph(

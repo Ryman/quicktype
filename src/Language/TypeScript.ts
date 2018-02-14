@@ -139,6 +139,10 @@ class TypeScriptRenderer extends ConvenienceRenderer {
         return directlyReachableSingleNamedType(type);
     }
 
+    protected get commentLineStart(): string {
+        return "// ";
+    }
+
     private emitEnum = (e: EnumType, enumName: Name): void => {
         this.emitBlock(["export enum ", enumName], "", () => {
             this.forEachEnumCase(e, "none", (name, jsonName) => {
@@ -372,7 +376,7 @@ function O(className: string) {
 
     protected emitSourceStructure() {
         if (this.leadingComments !== undefined) {
-            this.emitCommentLines("// ", this.leadingComments);
+            this.emitCommentLines(this.leadingComments);
         } else if (!this._justTypes) {
             this.emitMultiline(`// To parse this data:
 //`);

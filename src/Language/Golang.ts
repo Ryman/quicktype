@@ -130,6 +130,10 @@ class GoRenderer extends ConvenienceRenderer {
         return [unmarshalName];
     }
 
+    protected get commentLineStart(): string {
+        return "// ";
+    }
+
     private emitBlock = (line: Sourcelike, f: () => void): void => {
         this.emitLine(line, " {");
         this.indent(f);
@@ -310,7 +314,7 @@ class GoRenderer extends ConvenienceRenderer {
 
     protected emitSourceStructure(): void {
         if (this.leadingComments !== undefined) {
-            this.emitCommentLines("// ", this.leadingComments);
+            this.emitCommentLines(this.leadingComments);
         } else if (!this._justTypes) {
             this.emitLine("// To parse and unparse this JSON data, add this code to your project and do:");
             this.forEachTopLevel("none", (_: Type, name: Name) => {
