@@ -234,7 +234,7 @@ function inferOptions(opts: Partial<CLIOptions>): CLIOptions {
         topLevel: opts.topLevel || inferTopLevel(opts),
         noMaps: !!opts.noMaps,
         noEnums: !!opts.noEnums,
-        inferDates: opts.inferDates || false,
+        inferDates: !!opts.inferDates,
         noCombineClasses: !!opts.noCombineClasses,
         noRender: !!opts.noRender,
         alphabetizeProperties: !!opts.alphabetizeProperties,
